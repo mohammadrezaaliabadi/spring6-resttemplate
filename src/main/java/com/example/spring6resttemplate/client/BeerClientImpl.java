@@ -1,6 +1,7 @@
 package com.example.spring6resttemplate.client;
 
 import com.example.spring6resttemplate.model.BeerDTO;
+import com.example.spring6resttemplate.model.BeerDTOPageImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -21,19 +22,21 @@ public class BeerClientImpl implements BeerClient {
     @Override
     public Page<BeerDTO> listBeers() {
         RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<String> stringResponse =
-                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH , String.class);
+//        ResponseEntity<String> stringResponse =
+//                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH , String.class);
+//
+//        ResponseEntity<Map> mapResponse =
+//                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, Map.class);
+//
+//        ResponseEntity<JsonNode> jsonResponse = restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, JsonNode.class);
+//
+//        jsonResponse.getBody().findPath("content").elements().forEachRemaining(node->{
+//            System.out.println(node.get("beerName"));
+//        });
 
-        ResponseEntity<Map> mapResponse =
-                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, Map.class);
-
-        ResponseEntity<JsonNode> jsonResponse = restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, JsonNode.class);
-
-        jsonResponse.getBody().findPath("content").elements().forEachRemaining(node->{
-            System.out.println(node.get("beerName"));
-        });
-
-        System.out.println(mapResponse.getBody());
+        ResponseEntity<BeerDTOPageImpl> stringResponse =
+                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, BeerDTOPageImpl.class);
+        System.out.println(stringResponse.getBody());
         return null;
     }
 }
