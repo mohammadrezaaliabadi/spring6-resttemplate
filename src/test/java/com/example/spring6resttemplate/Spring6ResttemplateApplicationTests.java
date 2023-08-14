@@ -12,9 +12,14 @@ class Spring6ResttemplateApplicationTests {
     BeerClient beerClient;
 
     @Test
+    void listBeersNoBeerName() {
+
+        beerClient.listBeers(null);
+    }
+    @Test
     void contextLoads() {
 
-        beerClient.listBeers();
+        System.out.println(beerClient.listBeers("ALE"));
     }
 
 }
