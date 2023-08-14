@@ -3,7 +3,6 @@ package com.example.spring6resttemplate.client;
 import com.example.spring6resttemplate.model.BeerDTO;
 import com.example.spring6resttemplate.model.BeerDTOPageImpl;
 import com.example.spring6resttemplate.model.BeerStyle;
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Map;
+import java.net.URI;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -32,8 +31,9 @@ public class BeerClientImpl implements BeerClient {
     @Override
     public BeerDTO createBeer(BeerDTO newDto) {
         RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity <BeerDTO> response = restTemplate.postForEntity(GET_BEER_PATH,newDto,BeerDTO.class);
-        return response.getBody();
+
+        URI uri = restTemplate.postForLocation(GET_BEER_PATH,newDto);
+        return restTemplate.getForObject(uri.getPath(),BeerDTO.class);
     }
 
     @Override
